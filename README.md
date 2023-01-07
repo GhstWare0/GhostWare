@@ -1,1 +1,1 @@
-# GhostWare
+# GhostWare Beta
