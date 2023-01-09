@@ -1,3 +1,622 @@
 
 
-local v0={instances={},espCache={},chamsCache={},objectCache={},conns={},whitelist={},blacklist={},options={enabled=true,minScaleFactorX=3 -2,maxScaleFactorX=3 + 7,minScaleFactorY=4 -3,maxScaleFactorY=30 -20,scaleFactorX=8 -3,scaleFactorY=5 + 1,boundingBox=false,boundingBoxDescending=true,excludedPartNames={},font=1 + 1,fontSize=8 + 5,limitDistance=false,maxDistance=2600 -(853 + 747),visibleOnly=false,teamCheck=false,teamColor=false,fillColor=nil,whitelistColor=Color3.new(1 + 0,0 + 0,0),outOfViewArrows=true,outOfViewArrowsFilled=true,outOfViewArrowsSize=24 + 1,outOfViewArrowsRadius=91 + 9,outOfViewArrowsColor=Color3.new(3 -2,1 + 0,1 + 0),outOfViewArrowsTransparency=0.5 -0,outOfViewArrowsOutline=true,outOfViewArrowsOutlineFilled=false,outOfViewArrowsOutlineColor=Color3.new(1234 -(1176 + 57),1609 -(845 + 763),1),outOfViewArrowsOutlineTransparency=1368 -(704 + 663),names=true,nameTransparency=1077 -(1047 + 29),nameColor=Color3.new(2 -1,1 + 0,1594 -(1008 + 585)),boxes=true,boxesTransparency=332 -(267 + 64),boxesColor=Color3.new(1 + 0,0 + 0,1293 -(153 + 1140)),boxFill=false,boxFillTransparency=0.5 + 0,boxFillColor=Color3.new(1 -0,0 -0,574 -(366 + 208)),healthBars=true,healthBarsSize=3 -2,healthBarsTransparency=617 -(342 + 274),healthBarsColor=Color3.new(0 + 0,809 -(395 + 413),0 -0),healthText=true,healthTextTransparency=2 -1,healthTextSuffix="%",healthTextColor=Color3.new(3 -2,2 -1,1 + 0),distance=true,distanceTransparency=1 + 0,distanceSuffix=" Studs",distanceColor=Color3.new(4 -3,1064 -(738 + 325),1 -0),tracers=false,tracerTransparency=2 -1,tracerColor=Color3.new(374 -(214 + 159),2 -1,1676 -(451 + 1224)),tracerOrigin="Bottom",chams=true,chamsFillColor=Color3.new(931 -(597 + 333),0 + 0,0 + 0),chamsFillTransparency=0.5,chamsOutlineColor=Color3.new(),chamsOutlineTransparency=0 + 0}};v0.__index=v0;local v2=game.GetService;local v3=Instance.new;local v4=Drawing.new;local v5=Vector2.new;local v6=Vector3.new;local v7=CFrame.new;local v8=Color3.new;local v9=RaycastParams.new;local v10=math.abs;local v11=math.tan;local v12=math.rad;local v13=math.clamp;local v14=math.floor;local v15=table.find;local v16=table.insert;local v17=game.FindFirstChild;local v18=game.GetChildren;local v19=game.GetDescendants;local v20=workspace.IsA;local v21=workspace.Raycast;local v22=v7();local v23=v22.PointToObjectSpace;local v24=v22.GetComponents;local v25=v6().Cross;local v26=(354 -(302 + 51))/(0 + 0);local v27=v2(game,"Workspace");local v28=v2(game,"RunService");local v29=v2(game,"Players");local v30=v2(game,"CoreGui");local v31=v2(game,"UserInputService");local v32=v27.CurrentCamera;local v33=v29.LocalPlayer;local v34=v3("ScreenGui",v30);local v35,v36;local v37=v32.WorldToViewportPoint;local function v38(v58)return (v58=="Square") or (v58=="Text") or (v58=="Triangle") or (v58=="Image") or (v58=="Line") or (v58=="Circle");end local function v39(v59,v60)local v88=v38(v59);local v89=(v88 and v4(v59)) or v3(v59);if v60 then for v139,v140 in next,v60 do v89[v139]=v140;end end if  not v88 then v16(v0.instances,v89);end return v89;end local function v40(v61)local v90=0 + 0;local v91;local v92;while true do if (v90==(0 -0)) then v91,v92=v37(v32,v61);return v5(v91.X,v91.Y),v92,v91.Z;end end end local function v41(v62)return ((typeof(v62)=="Vector2") and v5(v41(v62.X),v41(v62.Y))) or v14(v62);end v0.getTeam=function(v63)local v93=0 + 0;local v94;while true do if ((0 + 0)==v93) then v94=v63.Team;return v94,v63.TeamColor.Color;end end end;v0.getCharacter=function(v64)local v95=0 + 0;local v96;while true do if (v95==(0 + 0)) then v96=v64.Character;return v96,v96 and v17(v96,"HumanoidRootPart");end end end;v0.getBoundingBox=function(v65,v66)if v0.options.boundingBox then local v129,v130,v131=v26,v26,v26;local v132,v133,v134= -v26, -v26, -v26;for v144,v145 in next,(v0.options.boundingBoxDescending and v19(v65)) or v18(v65) do if (v20(v145,"BasePart") and  not v15(v0.options.excludedPartNames,v145.Name)) then local v170=v145.Size;local v171,v172,v173=v170.X,v170.Y,v170.Z;local v174,v175,v176,v177,v178,v179,v180,v181,v182,v183,v184,v185=v24(v145.CFrame);local v186=0.5 * ((v10(v177) * v171) + (v10(v178) * v172) + (v10(v179) * v173));local v187=(0.5 -0) * ((v10(v180) * v171) + (v10(v181) * v172) + (v10(v182) * v173));local v188=(0.5 + 0) * ((v10(v183) * v171) + (v10(v184) * v172) + (v10(v185) * v173));v129=((v129>(v174-v186)) and (v174-v186)) or v129;v130=((v130>(v175-v187)) and (v175-v187)) or v130;v131=((v131>(v176-v188)) and (v176-v188)) or v131;v132=((v132<(v174 + v186)) and (v174 + v186)) or v132;v133=((v133<(v175 + v187)) and (v175 + v187)) or v133;v134=((v134<(v176 + v188)) and (v176 + v188)) or v134;end end local v135,v136=v6(v129,v130,v131),v6(v132,v133,v134);return (v136 + v135) * (805.5 -(564 + 241)),v136-v135;else return v66.Position,v5(v0.options.scaleFactorX,v0.options.scaleFactorY);end end;v0.getScaleFactor=function(v67,v68)if (v67~=v35) then local v137=0 -0;while true do if (v137==(100 -(54 + 46))) then v36=v11(v12(v67 * (0.5 -0))) * (107 -(77 + 28));v35=v67;break;end end end return ((1 -0)/(v68 * v36)) * 1000;end;v0.getBoxData=function(v69,v70)local v97,v98,v99=v40(v69);local v100=v0.getScaleFactor(v32.FieldOfView,v99);local v101=v13(v70.X,v0.options.minScaleFactorX,v0.options.maxScaleFactorX);local v102=v13(v70.Y,v0.options.minScaleFactorY,v0.options.maxScaleFactorY);local v103=v41(v5(v101 * v100,v102 * v100));return v98,v103,v41(v5(v97.X-(v103.X * (0.5 -0)),v97.Y-(v103.Y * (0.5 -0)))),v97;end;v0.getHealth=function(v71,v72)local v104=0 -0;local v105;while true do if (v104==(2 -1)) then return 157 -(46 + 11),757 -(567 + 90);end if (v104==(0 + 0)) then v105=v17(v72,"Humanoid");if v105 then return v71.leaderstats.Health.Value,v105.MaxHealth;end v104=1 -0;end end end;v0.visibleCheck=function(v73,v74)local v106=0 -0;local v107;local v108;while true do if ((0 -0)==v106) then v107=v32.CFrame.Position;v108=v9();v106=1 + 0;end if (v106==2) then v108.IgnoreWater=true;return  not v21(v27,v107,v74-v107,v108);end if (v106==(1 -0)) then v108.FilterDescendantsInstances={v0.getCharacter(v33),v32,v73};v108.FilterType=Enum.RaycastFilterType.Blacklist;v106=323 -(245 + 76);end end end;v0.addEsp=function(v75)local v109=0;local v110;while true do if (v109==(1 + 0)) then v0.espCache[v75]=v110;break;end if (v109==(0 -0)) then if (v75==v33) then return;end v110={arrow=v39("Triangle",{Thickness=1 + 0}),arrowOutline=v39("Triangle",{Thickness=1 + 0}),top=v39("Text",{Center=true,Size=1694 -(1370 + 311),Outline=true,OutlineColor=v8(),Font=1 + 1}),side=v39("Text",{Size=13 + 0,Outline=true,OutlineColor=v8(),Font=2 + 0}),bottom=v39("Text",{Center=true,Size=790 -(216 + 561),Outline=true,OutlineColor=v8(),Font=2}),boxFill=v39("Square",{Thickness=72 -(19 + 52),Filled=true}),boxOutline=v39("Square",{Thickness=3,Color=v8()}),box=v39("Square",{Thickness=993 -(353 + 639)}),healthBarOutline=v39("Square",{Thickness=1,Color=v8(),Filled=true}),healthBar=v39("Square",{Thickness=529 -(285 + 243),Filled=true}),line=v39("Line")};v109=1;end end end;v0.removeEsp=function(v76)local v111=v0.espCache[v76];if v111 then local v138=0 -0;while true do if (v138==(0 -0)) then v0.espCache[v76]=nil;for v195,v196 in next,v111 do v111[v195]=nil;v196:Remove();end break;end end end end;v0.addChams=function(v77)local v112=1923 -(836 + 1087);while true do if (v112==(1968 -(1491 + 477))) then if (v77==v33) then return;end v0.chamsCache[v77]=v39("Highlight",{Parent=v34});break;end end end;v0.removeChams=function(v78)local v113=1006 -(708 + 298);local v114;while true do if (v113==(0 -0)) then v114=v0.chamsCache[v78];if v114 then local v190=557 -(12 + 545);while true do if (v190==(0 -0)) then v0.chamsCache[v78]=nil;v114:Destroy();break;end end end break;end end end;v0.addObject=function(v79,v80)v0.objectCache[v79]={options=v80,text=v39("Text",{Center=true,Size=13,Outline=true,OutlineColor=v8(),Font=2})};end;v0.removeObject=function(v81)local v116=0 -0;local v117;while true do if (v116==(0 -0)) then v117=v0.objectCache[v81];if v117 then local v191=1638 -(942 + 696);while true do if (v191==(0 + 0)) then v0.objectCache[v81]=nil;v117.text:Remove();break;end end end break;end end end;v0.AddObjectEsp=function(v82,v83,v84)local v118=0 + 0;local v119;while true do if (v118==(1 + 0)) then v119.maxDistance=v119.maxDistance or false;v119.visibleOnly=v119.visibleOnly or false;v119.color=v119.color or v8(1 + 0,1 + 0,1);v119.transparency=v119.transparency or (2 -1);v118=3 -1;end if (v118==(8 -6)) then v119.text=v119.text or v83.Name;v119.font=v119.font or (146 -(81 + 63));v119.fontSize=v119.fontSize or (1969 -(1418 + 538));v82.addObject(v83,v119);v118=2 + 1;end if (v118==(1185 -(455 + 727))) then v16(v82.conns,v83.Parent.ChildRemoved:Connect(function(v164)if (v164==v83) then v82.removeObject(v164);end end));return v119;end if (v118==(0 -0)) then assert(v83 and v83.Parent,"invalid object passed");v119=v84 or {};v119.enabled=v119.enabled or true;v119.limitDistance=v119.limitDistance or false;v118=1 + 0;end end end;v0.Unload=function(v85)for v121,v122 in next,v85.conns do v122:Disconnect();end for v123,v124 in next,v29:GetPlayers() do v85.removeEsp(v124);v85.removeChams(v124);end for v125,v126 in next,v85.objectCache do v85.removeObject(v125);end for v127,v128 in next,v85.instances do v128:Destroy();end v34:Destroy();v28:UnbindFromRenderStep("esp_rendering");end;v0.Load=function(v86,v87)local v120=0 -0;while true do if ((0 -0)==v120) then v16(v86.conns,v29.PlayerAdded:Connect(function(v165)local v192=0 + 0;while true do if (v192==(218 -(126 + 92))) then v86.addEsp(v165);v86.addChams(v165);break;end end end));v16(v86.conns,v29.PlayerRemoving:Connect(function(v166)local v193=0 -0;while true do if ((19 -(15 + 4))==v193) then v86.removeEsp(v166);v86.removeChams(v166);break;end end end));v120=1 + 0;end if (v120==(3 -2)) then for v167,v168 in next,v29:GetPlayers() do local v169=1655 -(1090 + 565);while true do if (v169==(1801 -(496 + 1305))) then v86.addEsp(v168);v86.addChams(v168);break;end end end v28:BindToRenderStep("esp_rendering",v87 or (Enum.RenderPriority.Camera.Value + (1081 -(422 + 658))),function()local v194=0 -0;while true do if (v194==1) then for v200,v201 in next,v86.objectCache do local v202=639 -(147 + 492);local v203;local v204;local v205;local v206;local v207;while true do if (v202==3) then v201.text.Size=v201.options.fontSize;v201.text.Transparency=v201.options.transparency;v201.text.Color=v201.options.color;v202=2 + 2;end if (v202==(1993 -(297 + 1692))) then v201.text.Text=v201.options.text;v201.text.Position=v41(v205);break;end if (1==v202) then v205,v206=v40(v203);v207=v201.options.enabled and v206;if (v86.options.limitDistance and (v204>v86.options.maxDistance)) then v207=false;end v202=4 -2;end if (v202==(7 -5)) then if (v86.options.visibleOnly and  not v86.visibleCheck(v200,v203)) then v207=false;end v201.text.Visible=v207;v201.text.Font=v201.options.font;v202=10 -7;end if (v202==(1265 -(1036 + 229))) then v203=v6();if (v200:IsA("BasePart")) then v203=v200.Position;elseif (v200:IsA("Model")) then v203=v86.getBoundingBox(v200);end v204=(v32.CFrame.Position-v203).Magnitude;v202=112 -(39 + 72);end end end break;end if ((0 -0)==v194) then for v208,v209 in next,v86.espCache do local v210=0 -0;local v211;local v212;while true do if (v210==(0 + 0)) then v211,v212=v86.getCharacter(v208);if (v211 and v212) then local v232=1975 -(430 + 1545);local v233;local v234;local v235;local v236;local v237;local v238;local v239;local v240;local v241;local v242;local v243;local v244;local v245;local v246;local v247;local v248;local v249;local v250;local v251;local v252;local v253;local v254;local v255;local v256;local v257;local v258;local v259;local v260;while true do if (v232==(19 -12)) then v209.side.Transparency=v86.options.healthTextTransparency;v209.side.Color=v242 or v86.options.healthTextColor;v209.side.Text=v255   .. v86.options.healthTextSuffix;v209.side.Position=v41(v235 + v5(v234.X + (3 -0), -3));v209.bottom.Visible=v260 and v86.options.distance;v209.bottom.Font=v86.options.font;v209.bottom.Size=v86.options.fontSize;v232=39 -31;end if ((43 -31)==v232) then v209.line.Color=v242 or v86.options.tracerColor;v209.line.Transparency=v86.options.tracerTransparency;v209.line.From=((v259=="Mouse") and v31:GetMouseLocation()) or ((v259=="Top") and v5(v243.X * (0.5 -0),915 -(667 + 248))) or ((v259=="Bottom") and v5(v243.X * (1626.5 -(406 + 1220)),v243.Y));v209.line.To=v236;break;end if (v232==(1200 -(696 + 504))) then v233,v234,v235,v236=v86.getBoxData(v212.Position,Vector3.new(3 + 2,12 -6));v237=(v32.CFrame.Position-v212.Position).Magnitude;v238,v239=v233 and v234 and v235,v86.options.enabled;v240,v241=v86.getTeam(v208);v242=(v86.options.teamColor and v241) or nil;if (v86.options.fillColor~=nil) then v242=v86.options.fillColor;end if (v15(v86.whitelist,v208.Name)) then v242=v86.options.whitelistColor;end v232=1 -0;end if (v232==4) then v209.arrow.Color=v242 or v86.options.outOfViewArrowsColor;v209.arrow.PointA=v252;v209.arrow.PointB=v253;v209.arrow.PointC=v254;v209.arrowOutline.Visible= not v238 and v239 and v86.options.outOfViewArrowsOutline;v209.arrowOutline.Filled=v86.options.outOfViewArrowsOutlineFilled;v209.arrowOutline.Transparency=v86.options.outOfViewArrowsOutlineTransparency;v232=2 + 3;end if (v232==(1140 -(729 + 403))) then v209.bottom.Transparency=v86.options.distanceTransparency;v209.bottom.Color=v242 or v86.options.nameColor;v209.bottom.Text=tostring(v41(v237))   .. v86.options.distanceSuffix;v209.bottom.Position=v41(v235 + v5(v234.X * (0.5 -0),v234.Y + (3 -2)));v209.box.Visible=v260 and v86.options.boxes;v209.box.Color=v242 or v86.options.boxesColor;v209.box.Transparency=v86.options.boxesTransparency;v232=1021 -(251 + 761);end if (v232==(7 -4)) then v257=v41(v5(v86.options.healthBarsSize, -(v234.Y * (v255/v256))));v258=v41(v5(v235.X-((11 -8) + v257.X),v235.Y + v234.Y));v259=v86.options.tracerOrigin;v260=v238 and v239;v209.arrow.Visible= not v238 and v239 and v86.options.outOfViewArrows;v209.arrow.Filled=v86.options.outOfViewArrowsFilled;v209.arrow.Transparency=v86.options.outOfViewArrowsTransparency;v232=1 + 3;end if (v232==(1397 -(602 + 790))) then v209.arrowOutline.Color=v242 or v86.options.outOfViewArrowsOutlineColor;v209.arrowOutline.PointA=v252;v209.arrowOutline.PointB=v253;v209.arrowOutline.PointC=v254;v209.top.Visible=v260 and v86.options.names;v209.top.Font=v86.options.font;v209.top.Size=v86.options.fontSize;v232=1425 -(858 + 561);end if (v232==(2 -0)) then v246=v25(v245,v6(0 -0,4 -3,3 -2));v247=v5(v246.X,v246.Z);v248,v249=v86.options.outOfViewArrowsRadius,v86.options.outOfViewArrowsSize;v250=v244 + (v5(v245.X,v245.Z) * v248);v251=(v250-v244).Unit;v252,v253,v254=v250,v244 + (v251 * (v248-v249)) + (v247 * v249),v244 + (v251 * (v248-v249)) + ( -v247 * v249);v255,v256=v86.getHealth(v208,v211);v232=4 -1;end if (v232==(1340 -(1205 + 126))) then v209.box.Size=v234;v209.box.Position=v235;v209.boxOutline.Visible=v260 and v86.options.boxes;v209.boxOutline.Transparency=v86.options.boxesTransparency;v209.boxOutline.Size=v234;v209.boxOutline.Position=v235;v209.boxFill.Visible=v260 and v86.options.boxFill;v232=34 -24;end if ((310 -(70 + 230))==v232) then v209.boxFill.Color=v242 or v86.options.boxFillColor;v209.boxFill.Transparency=v86.options.boxFillTransparency;v209.boxFill.Size=v234;v209.boxFill.Position=v235;v209.healthBar.Visible=v260 and v86.options.healthBars;v209.healthBar.Color=v242 or v86.options.healthBarsColor;v209.healthBar.Transparency=v86.options.healthBarsTransparency;v232=11;end if (v232==(1 + 0)) then if (v15(v86.blacklist,v208.Name)) then v239=false;end if (v86.options.limitDistance and (v237>v86.options.maxDistance)) then v239=false;end if (v86.options.visibleOnly and  not v86.visibleCheck(v211,v212.Position)) then v239=false;end if (v86.options.teamCheck and (v240==v86.getTeam(v33))) then v239=false;end v243=v32.ViewportSize;v244=v5(v243.X/(709 -(690 + 17)),v243.Y/(4 -2));v245=(v23(v32.CFrame,v212.Position) * v6(1 -0,1519 -(1031 + 488),1 -0)).Unit;v232=4 -2;end if (v232==(24 -18)) then v209.top.Transparency=v86.options.nameTransparency;v209.top.Color=v242 or v86.options.nameColor;v209.top.Text=v208.Name;v209.top.Position=v41(v235 + v5(v234.X * (1603.5 -(364 + 1239)), -(v209.top.TextBounds.Y + (9 -7))));v209.side.Visible=v260 and v86.options.healthText;v209.side.Font=v86.options.font;v209.side.Size=v86.options.fontSize;v232=18 -11;end if (v232==(10 + 1)) then v209.healthBar.Size=v257;v209.healthBar.Position=v258;v209.healthBarOutline.Visible=v260 and v86.options.healthBars;v209.healthBarOutline.Transparency=v86.options.healthBarsTransparency;v209.healthBarOutline.Size=v41(v5(v257.X, -v234.Y) + v5(1 + 1, -(1 + 1)));v209.healthBarOutline.Position=v258-v5(1 + 0, -(1 + 0));v209.line.Visible=v260 and v86.options.tracers;v232=1 + 11;end end else for v275,v276 in next,v209 do v276.Visible=false;end end break;end end end for v213,v214 in next,v86.chamsCache do local v215=1955 -(1725 + 230);local v216;local v217;while true do if (v215==(0 -0)) then v216,v217=v86.getCharacter(v213);if (v216 and v217) then local v261=(v32.CFrame.Position-v217.Position).Magnitude;local v262=v86.options.enabled and v86.options.chams;local v263,v264=v86.getTeam(v213);local v265=(v86.options.teamColor and v264) or nil;if (v86.options.fillColor~=nil) then v265=v86.options.fillColor;end if (v15(v86.whitelist,v213.Name)) then v265=v86.options.whitelistColor;end if (v15(v86.blacklist,v213.Name)) then v262=false;end if (v86.options.limitDistance and (v261>v86.options.maxDistance)) then v262=false;end if (v86.options.teamCheck and (v263==v86.getTeam(v33))) then v262=false;end v214.Enabled=v262;v214.DepthMode=(v86.options.visibleOnly and Enum.HighlightDepthMode.Occluded) or Enum.HighlightDepthMode.AlwaysOnTop;v214.Adornee=v216;v214.FillColor=v265 or v86.options.chamsFillColor;v214.FillTransparency=v86.options.chamsFillTransparency;v214.OutlineColor=v265 or v86.options.chamsOutlineColor;v214.OutlineTransparency=v86.options.chamsOutlineTransparency;end break;end end end v194=1;end end end);break;end end end;return v0;
+
+
+-- main module
+local espLibrary = {
+    instances = {},
+    espCache = {},
+    chamsCache = {},
+    objectCache = {},
+    conns = {},
+    whitelist = {}, -- insert string that is the player's name you want to whitelist (turns esp color to whitelistColor in options)
+    blacklist = {}, -- insert string that is the player's name you want to blacklist (removes player from esp)
+    options = {
+        enabled = true,
+        minScaleFactorX = 1,
+        maxScaleFactorX = 10,
+        minScaleFactorY = 1,
+        maxScaleFactorY = 10,
+        scaleFactorX = 5,
+        scaleFactorY = 6,
+        boundingBox = false, -- WARNING | Significant Performance Decrease when true
+        boundingBoxDescending = true,
+        excludedPartNames = {},
+        font = 2,
+        fontSize = 13,
+        limitDistance = false,
+        maxDistance = 1000,
+        visibleOnly = false,
+        teamCheck = false,
+        teamColor = false,
+        fillColor = nil,
+        whitelistColor = Color3.new(1, 0, 0),
+        outOfViewArrows = true,
+        outOfViewArrowsFilled = true,
+        outOfViewArrowsSize = 25,
+        outOfViewArrowsRadius = 100,
+        outOfViewArrowsColor = Color3.new(1, 1, 1),
+        outOfViewArrowsTransparency = 0.5,
+        outOfViewArrowsOutline = true,
+        outOfViewArrowsOutlineFilled = false,
+        outOfViewArrowsOutlineColor = Color3.new(1, 1, 1),
+        outOfViewArrowsOutlineTransparency = 1,
+        names = true,
+        nameTransparency = 1,
+        nameColor = Color3.new(1, 1, 1),
+        boxes = true,
+        boxesTransparency = 1,
+        boxesColor = Color3.new(1, 0, 0),
+        boxFill = false,
+        boxFillTransparency = 0.5,
+        boxFillColor = Color3.new(1, 0, 0),
+        healthBars = true,
+        healthBarsSize = 1,
+        healthBarsTransparency = 1,
+        healthBarsColor = Color3.new(0, 1, 0),
+        healthText = true,
+        healthTextTransparency = 1,
+        healthTextSuffix = "%",
+        healthTextColor = Color3.new(1, 1, 1),
+        distance = true,
+        distanceTransparency = 1,
+        distanceSuffix = " Studs",
+        distanceColor = Color3.new(1, 1, 1),
+        tracers = false,
+        tracerTransparency = 1,
+        tracerColor = Color3.new(1, 1, 1),
+        tracerOrigin = "Bottom", -- Available [Mouse, Top, Bottom]
+        chams = true,
+        chamsFillColor = Color3.new(1, 0, 0),
+        chamsFillTransparency = 0.5,
+        chamsOutlineColor = Color3.new(),
+        chamsOutlineTransparency = 0
+    },
+};
+espLibrary.__index = espLibrary;
+
+-- variables
+local getService = game.GetService;
+local instanceNew = Instance.new;
+local drawingNew = Drawing.new;
+local vector2New = Vector2.new;
+local vector3New = Vector3.new;
+local cframeNew = CFrame.new;
+local color3New = Color3.new;
+local raycastParamsNew = RaycastParams.new;
+local abs = math.abs;
+local tan = math.tan;
+local rad = math.rad;
+local clamp = math.clamp;
+local floor = math.floor;
+local find = table.find;
+local insert = table.insert;
+local findFirstChild = game.FindFirstChild;
+local getChildren = game.GetChildren;
+local getDescendants = game.GetDescendants;
+local isA = workspace.IsA;
+local raycast = workspace.Raycast;
+local emptyCFrame = cframeNew();
+local pointToObjectSpace = emptyCFrame.PointToObjectSpace;
+local getComponents = emptyCFrame.GetComponents;
+local cross = vector3New().Cross;
+local inf = 1 / 0;
+
+-- services
+local workspace = getService(game, "Workspace");
+local runService = getService(game, "RunService");
+local players = getService(game, "Players");
+local coreGui = getService(game, "CoreGui");
+local userInputService = getService(game, "UserInputService");
+
+-- cache
+local currentCamera = workspace.CurrentCamera;
+local localPlayer = players.LocalPlayer;
+local screenGui = instanceNew("ScreenGui", coreGui);
+local lastFov, lastScale;
+
+-- instance functions
+local wtvp = currentCamera.WorldToViewportPoint;
+
+-- Support Functions
+local function isDrawing(type)
+    return type == "Square" or type == "Text" or type == "Triangle" or type == "Image" or type == "Line" or type == "Circle";
+end
+
+local function create(type, properties)
+    local drawing = isDrawing(type);
+    local object = drawing and drawingNew(type) or instanceNew(type);
+
+    if (properties) then
+        for i,v in next, properties do
+            object[i] = v;
+        end
+    end
+
+    if (not drawing) then
+        insert(espLibrary.instances, object);
+    end
+
+    return object;
+end
+
+local function worldToViewportPoint(position)
+    local screenPosition, onScreen = wtvp(currentCamera, position);
+    return vector2New(screenPosition.X, screenPosition.Y), onScreen, screenPosition.Z;
+end
+
+local function round(number)
+    return typeof(number) == "Vector2" and vector2New(round(number.X), round(number.Y)) or floor(number);
+end
+
+-- Main Functions
+function espLibrary.getTeam(player)
+    local team = player.Team;
+    return team, player.TeamColor.Color;
+end
+
+function espLibrary.getCharacter(player)
+    local character = player.Character;
+    return character, character and findFirstChild(character, "HumanoidRootPart");
+end
+
+function espLibrary.getBoundingBox(character, torso)
+    if (espLibrary.options.boundingBox) then
+        local minX, minY, minZ = inf, inf, inf;
+        local maxX, maxY, maxZ = -inf, -inf, -inf;
+
+        for _, part in next, espLibrary.options.boundingBoxDescending and getDescendants(character) or getChildren(character) do
+            if (isA(part, "BasePart") and not find(espLibrary.options.excludedPartNames, part.Name)) then
+                local size = part.Size;
+                local sizeX, sizeY, sizeZ = size.X, size.Y, size.Z;
+
+                local x, y, z, r00, r01, r02, r10, r11, r12, r20, r21, r22 = getComponents(part.CFrame);
+
+                local wiseX = 0.5 * (abs(r00) * sizeX + abs(r01) * sizeY + abs(r02) * sizeZ);
+                local wiseY = 0.5 * (abs(r10) * sizeX + abs(r11) * sizeY + abs(r12) * sizeZ);
+                local wiseZ = 0.5 * (abs(r20) * sizeX + abs(r21) * sizeY + abs(r22) * sizeZ);
+
+                minX = minX > x - wiseX and x - wiseX or minX;
+                minY = minY > y - wiseY and y - wiseY or minY;
+                minZ = minZ > z - wiseZ and z - wiseZ or minZ;
+
+                maxX = maxX < x + wiseX and x + wiseX or maxX;
+                maxY = maxY < y + wiseY and y + wiseY or maxY;
+                maxZ = maxZ < z + wiseZ and z + wiseZ or maxZ;
+            end
+        end
+
+        local oMin, oMax = vector3New(minX, minY, minZ), vector3New(maxX, maxY, maxZ);
+        return (oMax + oMin) * 0.5, oMax - oMin;
+    else
+        return torso.Position, vector2New(espLibrary.options.scaleFactorX, espLibrary.options.scaleFactorY);
+    end
+end
+
+function espLibrary.getScaleFactor(fov, depth)
+    if (fov ~= lastFov) then
+        lastScale = tan(rad(fov * 0.5)) * 2;
+        lastFov = fov;
+    end
+
+    return 1 / (depth * lastScale) * 1000;
+end
+
+function espLibrary.getBoxData(position, size)
+    local torsoPosition, onScreen, depth = worldToViewportPoint(position);
+    local scaleFactor = espLibrary.getScaleFactor(currentCamera.FieldOfView, depth);
+
+    local clampX = clamp(size.X, espLibrary.options.minScaleFactorX, espLibrary.options.maxScaleFactorX);
+    local clampY = clamp(size.Y, espLibrary.options.minScaleFactorY, espLibrary.options.maxScaleFactorY);
+    local size = round(vector2New(clampX * scaleFactor, clampY * scaleFactor));
+
+    return onScreen, size, round(vector2New(torsoPosition.X - (size.X * 0.5), torsoPosition.Y - (size.Y * 0.5))), torsoPosition;
+end
+
+function espLibrary.getHealth(player, character)
+    local humanoid = findFirstChild(character, "Humanoid");
+
+    if (humanoid) then
+        return humanoid.Health, humanoid.MaxHealth;
+    end
+
+    return 100, 100;
+end
+
+function espLibrary.visibleCheck(character, position)
+    local origin = currentCamera.CFrame.Position;
+    local params = raycastParamsNew();
+
+    params.FilterDescendantsInstances = { espLibrary.getCharacter(localPlayer), currentCamera, character };
+    params.FilterType = Enum.RaycastFilterType.Blacklist;
+    params.IgnoreWater = true;
+
+    return (not raycast(workspace, origin, position - origin, params));
+end
+
+function espLibrary.addEsp(player)
+    if (player == localPlayer) then
+        return
+    end
+
+    local objects = {
+        arrow = create("Triangle", {
+            Thickness = 1,
+        }),
+        arrowOutline = create("Triangle", {
+            Thickness = 1,
+        }),
+        top = create("Text", {
+            Center = true,
+            Size = 13,
+            Outline = true,
+            OutlineColor = color3New(),
+            Font = 2,
+        }),
+        side = create("Text", {
+            Size = 13,
+            Outline = true,
+            OutlineColor = color3New(),
+            Font = 2,
+        }),
+        bottom = create("Text", {
+            Center = true,
+            Size = 13,
+            Outline = true,
+            OutlineColor = color3New(),
+            Font = 2,
+        }),
+        boxFill = create("Square", {
+            Thickness = 1,
+            Filled = true,
+        }),
+        boxOutline = create("Square", {
+            Thickness = 3,
+            Color = color3New()
+        }),
+        box = create("Square", {
+            Thickness = 1
+        }),
+        healthBarOutline = create("Square", {
+            Thickness = 1,
+            Color = color3New(),
+            Filled = true
+        }),
+        healthBar = create("Square", {
+            Thickness = 1,
+            Filled = true
+        }),
+        line = create("Line")
+    };
+
+    espLibrary.espCache[player] = objects;
+end
+
+function espLibrary.removeEsp(player)
+    local espCache = espLibrary.espCache[player];
+
+    if (espCache) then
+        espLibrary.espCache[player] = nil;
+
+        for index, object in next, espCache do
+            espCache[index] = nil;
+            object:Remove();
+        end
+    end
+end
+
+function espLibrary.addChams(player)
+    if (player == localPlayer) then
+        return
+    end
+
+    espLibrary.chamsCache[player] = create("Highlight", {
+        Parent = screenGui,
+    });
+end
+
+function espLibrary.removeChams(player)
+    local highlight = espLibrary.chamsCache[player];
+
+    if (highlight) then
+        espLibrary.chamsCache[player] = nil;
+        highlight:Destroy();
+    end
+end
+
+function espLibrary.addObject(object, options)
+    espLibrary.objectCache[object] = {
+        options = options,
+        text = create("Text", {
+            Center = true,
+            Size = 13,
+            Outline = true,
+            OutlineColor = color3New(),
+            Font = 2,
+        })
+    };
+end
+
+function espLibrary.removeObject(object)
+    local cache = espLibrary.objectCache[object];
+
+    if (cache) then
+        espLibrary.objectCache[object] = nil;
+        cache.text:Remove();
+    end
+end
+
+function espLibrary:AddObjectEsp(object, defaultOptions)
+    assert(object and object.Parent, "invalid object passed");
+
+    local options = defaultOptions or {};
+
+    options.enabled = options.enabled or true;
+    options.limitDistance = options.limitDistance or false;
+    options.maxDistance = options.maxDistance or false;
+    options.visibleOnly = options.visibleOnly or false;
+    options.color = options.color or color3New(1, 1, 1);
+    options.transparency = options.transparency or 1;
+    options.text = options.text or object.Name;
+    options.font = options.font or 2;
+    options.fontSize = options.fontSize or 13;
+
+    self.addObject(object, options);
+
+    insert(self.conns, object.Parent.ChildRemoved:Connect(function(child)
+        if (child == object) then
+            self.removeObject(child);
+        end
+    end));
+
+    return options;
+end
+
+function espLibrary:Unload()
+    for _, connection in next, self.conns do
+        connection:Disconnect();
+    end
+
+    for _, player in next, players:GetPlayers() do
+        self.removeEsp(player);
+        self.removeChams(player);
+    end
+
+    for object, _ in next, self.objectCache do
+        self.removeObject(object);
+    end
+
+    for _, object in next, self.instances do
+        object:Destroy();
+    end
+
+    screenGui:Destroy();
+    runService:UnbindFromRenderStep("esp_rendering");
+end
+
+function espLibrary:Load(renderValue)
+    insert(self.conns, players.PlayerAdded:Connect(function(player)
+        self.addEsp(player);
+        self.addChams(player);
+    end));
+
+    insert(self.conns, players.PlayerRemoving:Connect(function(player)
+        self.removeEsp(player);
+        self.removeChams(player);
+    end));
+
+    for _, player in next, players:GetPlayers() do
+        self.addEsp(player);
+        self.addChams(player);
+    end
+
+    runService:BindToRenderStep("esp_rendering", renderValue or (Enum.RenderPriority.Camera.Value + 1), function()
+        for player, objects in next, self.espCache do
+            local character, torso = self.getCharacter(player);
+
+            if (character and torso) then
+                local onScreen, size, position, torsoPosition = self.getBoxData(torso.Position, Vector3.new(5, 6));
+                local distance = (currentCamera.CFrame.Position - torso.Position).Magnitude;
+                local canShow, enabled = onScreen and (size and position), self.options.enabled;
+                local team, teamColor = self.getTeam(player);
+                local color = self.options.teamColor and teamColor or nil;
+
+                if (self.options.fillColor ~= nil) then
+                    color = self.options.fillColor;
+                end
+
+                if (find(self.whitelist, player.Name)) then
+                    color = self.options.whitelistColor;
+                end
+
+                if (find(self.blacklist, player.Name)) then
+                    enabled = false;
+                end
+
+                if (self.options.limitDistance and distance > self.options.maxDistance) then
+                    enabled = false;
+                end
+
+                if (self.options.visibleOnly and not self.visibleCheck(character, torso.Position)) then
+                    enabled = false;
+                end
+
+                if (self.options.teamCheck and (team == self.getTeam(localPlayer))) then
+                    enabled = false;
+                end
+
+                local viewportSize = currentCamera.ViewportSize;
+
+                local screenCenter = vector2New(viewportSize.X / 2, viewportSize.Y / 2);
+                local objectSpacePoint = (pointToObjectSpace(currentCamera.CFrame, torso.Position) * vector3New(1, 0, 1)).Unit;
+                local crossVector = cross(objectSpacePoint, vector3New(0, 1, 1));
+                local rightVector = vector2New(crossVector.X, crossVector.Z);
+
+                local arrowRadius, arrowSize = self.options.outOfViewArrowsRadius, self.options.outOfViewArrowsSize;
+                local arrowPosition = screenCenter + vector2New(objectSpacePoint.X, objectSpacePoint.Z) * arrowRadius;
+                local arrowDirection = (arrowPosition - screenCenter).Unit;
+
+                local pointA, pointB, pointC = arrowPosition, screenCenter + arrowDirection * (arrowRadius - arrowSize) + rightVector * arrowSize, screenCenter + arrowDirection * (arrowRadius - arrowSize) + -rightVector * arrowSize;
+
+                local health, maxHealth = self.getHealth(player, character);
+                local healthBarSize = round(vector2New(self.options.healthBarsSize, -(size.Y * (health / maxHealth))));
+                local healthBarPosition = round(vector2New(position.X - (3 + healthBarSize.X), position.Y + size.Y));
+
+                local origin = self.options.tracerOrigin;
+                local show = canShow and enabled;
+
+                objects.arrow.Visible = (not canShow and enabled) and self.options.outOfViewArrows;
+                objects.arrow.Filled = self.options.outOfViewArrowsFilled;
+                objects.arrow.Transparency = self.options.outOfViewArrowsTransparency;
+                objects.arrow.Color = color or self.options.outOfViewArrowsColor;
+                objects.arrow.PointA = pointA;
+                objects.arrow.PointB = pointB;
+                objects.arrow.PointC = pointC;
+
+                objects.arrowOutline.Visible = (not canShow and enabled) and self.options.outOfViewArrowsOutline;
+                objects.arrowOutline.Filled = self.options.outOfViewArrowsOutlineFilled;
+                objects.arrowOutline.Transparency = self.options.outOfViewArrowsOutlineTransparency;
+                objects.arrowOutline.Color = color or self.options.outOfViewArrowsOutlineColor;
+                objects.arrowOutline.PointA = pointA;
+                objects.arrowOutline.PointB = pointB;
+                objects.arrowOutline.PointC = pointC;
+
+                objects.top.Visible = show and self.options.names;
+                objects.top.Font = self.options.font;
+                objects.top.Size = self.options.fontSize;
+                objects.top.Transparency = self.options.nameTransparency;
+                objects.top.Color = color or self.options.nameColor;
+                objects.top.Text = player.Name;
+                objects.top.Position = round(position + vector2New(size.X * 0.5, -(objects.top.TextBounds.Y + 2)));
+
+                objects.side.Visible = show and self.options.healthText;
+                objects.side.Font = self.options.font;
+                objects.side.Size = self.options.fontSize;
+                objects.side.Transparency = self.options.healthTextTransparency;
+                objects.side.Color = color or self.options.healthTextColor;
+                objects.side.Text = health .. self.options.healthTextSuffix;
+                objects.side.Position = round(position + vector2New(size.X + 3, -3));
+
+                objects.bottom.Visible = show and self.options.distance;
+                objects.bottom.Font = self.options.font;
+                objects.bottom.Size = self.options.fontSize;
+                objects.bottom.Transparency = self.options.distanceTransparency;
+                objects.bottom.Color = color or self.options.nameColor;
+                objects.bottom.Text = tostring(round(distance)) .. self.options.distanceSuffix;
+                objects.bottom.Position = round(position + vector2New(size.X * 0.5, size.Y + 1));
+
+                objects.box.Visible = show and self.options.boxes;
+                objects.box.Color = color or self.options.boxesColor;
+                objects.box.Transparency = self.options.boxesTransparency;
+                objects.box.Size = size;
+                objects.box.Position = position;
+
+                objects.boxOutline.Visible = show and self.options.boxes;
+                objects.boxOutline.Transparency = self.options.boxesTransparency;
+                objects.boxOutline.Size = size;
+                objects.boxOutline.Position = position;
+
+                objects.boxFill.Visible = show and self.options.boxFill;
+                objects.boxFill.Color = color or self.options.boxFillColor;
+                objects.boxFill.Transparency = self.options.boxFillTransparency;
+                objects.boxFill.Size = size;
+                objects.boxFill.Position = position;
+
+                objects.healthBar.Visible = show and self.options.healthBars;
+                objects.healthBar.Color = color or self.options.healthBarsColor;
+                objects.healthBar.Transparency = self.options.healthBarsTransparency;
+                objects.healthBar.Size = healthBarSize;
+                objects.healthBar.Position = healthBarPosition;
+
+                objects.healthBarOutline.Visible = show and self.options.healthBars;
+                objects.healthBarOutline.Transparency = self.options.healthBarsTransparency;
+                objects.healthBarOutline.Size = round(vector2New(healthBarSize.X, -size.Y) + vector2New(2, -2));
+                objects.healthBarOutline.Position = healthBarPosition - vector2New(1, -1);
+
+                objects.line.Visible = show and self.options.tracers;
+                objects.line.Color = color or self.options.tracerColor;
+                objects.line.Transparency = self.options.tracerTransparency;
+                objects.line.From =
+                    origin == "Mouse" and userInputService:GetMouseLocation() or
+                    origin == "Top" and vector2New(viewportSize.X * 0.5, 0) or
+                    origin == "Bottom" and vector2New(viewportSize.X * 0.5, viewportSize.Y);
+                objects.line.To = torsoPosition;
+            else
+                for _, object in next, objects do
+                    object.Visible = false;
+                end
+            end
+        end
+
+        for player, highlight in next, self.chamsCache do
+            local character, torso = self.getCharacter(player);
+
+            if (character and torso) then
+                local distance = (currentCamera.CFrame.Position - torso.Position).Magnitude;
+                local canShow = self.options.enabled and self.options.chams;
+                local team, teamColor = self.getTeam(player);
+                local color = self.options.teamColor and teamColor or nil;
+
+                if (self.options.fillColor ~= nil) then
+                    color = self.options.fillColor;
+                end
+
+                if (find(self.whitelist, player.Name)) then
+                    color = self.options.whitelistColor;
+                end
+
+                if (find(self.blacklist, player.Name)) then
+                    canShow = false;
+                end
+
+                if (self.options.limitDistance and distance > self.options.maxDistance) then
+                    canShow = false;
+                end
+
+                if (self.options.teamCheck and (team == self.getTeam(localPlayer))) then
+                    canShow = false;
+                end
+
+                highlight.Enabled = canShow;
+                highlight.DepthMode = self.options.visibleOnly and Enum.HighlightDepthMode.Occluded or Enum.HighlightDepthMode.AlwaysOnTop;
+                highlight.Adornee = character;
+                highlight.FillColor = color or self.options.chamsFillColor;
+                highlight.FillTransparency = self.options.chamsFillTransparency;
+                highlight.OutlineColor = color or self.options.chamsOutlineColor;
+                highlight.OutlineTransparency = self.options.chamsOutlineTransparency;
+            end
+        end
+
+        for object, cache in next, self.objectCache do
+            local partPosition = vector3New();
+
+            if (object:IsA("BasePart")) then
+                partPosition = object.Position;
+            elseif (object:IsA("Model")) then
+                partPosition = self.getBoundingBox(object);
+            end
+
+            local distance = (currentCamera.CFrame.Position - partPosition).Magnitude;
+            local screenPosition, onScreen = worldToViewportPoint(partPosition);
+            local canShow = cache.options.enabled and onScreen;
+
+            if (self.options.limitDistance and distance > self.options.maxDistance) then
+                canShow = false;
+            end
+
+            if (self.options.visibleOnly and not self.visibleCheck(object, partPosition)) then
+                canShow = false;
+            end
+
+            cache.text.Visible = canShow;
+            cache.text.Font = cache.options.font;
+            cache.text.Size = cache.options.fontSize;
+            cache.text.Transparency = cache.options.transparency;
+            cache.text.Color = cache.options.color;
+            cache.text.Text = cache.options.text;
+            cache.text.Position = round(screenPosition);
+        end
+    end);
+end
+
+return espLibrary;
